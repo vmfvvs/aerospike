@@ -33,12 +33,15 @@ def get_ltv_by_id(customer_id):
     else:
     return record.get('ltv')
 
+    client.index_integer_create('test', 'demo', 'phone', 'phone')
 def get_ltv_by_phone(phone_number):
- 
     query = client.query('test', 'demo')   
     query.select('ltv')
     query.where(p.equals('phone', phone_number))
-    records = query.results({'total_timeout':2000})
-    return records
+    ltv_phone = []
+    def matched_names((key, metadata, bins)):
+        ltv_phone.append(bins['ltv'])
+    query.foreach(matched_names,  {'total_timeout':2000} )
+    return ltv_phone
     
     client.close()
