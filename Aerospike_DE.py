@@ -33,7 +33,8 @@ def get_ltv_by_id(customer_id):
     else:
     return record.get('ltv')
 
-    client.index_integer_create('test', 'demo', 'phone', 'phone')
+client.index_integer_create('test', 'demo', 'phone', 'phone')
+
 def get_ltv_by_phone(phone_number):
     query = client.query('test', 'demo')   
     query.select('ltv')
